@@ -1,0 +1,3 @@
+## 2026-03-03 - Replace Uncached DOM Query with IntersectionObserver
+**Learning:** Using `document.querySelectorAll` and `getBoundingClientRect()` within a high-frequency event listener like `scroll` causes serious performance issues due to repeated expensive DOM lookups and forced synchronous layout reflows.
+**Action:** Replaced the `animateOnScroll` function and its associated `scroll` event listener with an `IntersectionObserver`. This natively handles element visibility checks off the main thread, caching the elements to observe just once, drastically reducing CPU usage and eliminating layout thrashing during scrolls.
