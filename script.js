@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
             
             // Here you would typically send the data to a server
-            console.log('Form submitted:', data);
+            // removed form data logging to prevent PII leak
         });
     }
     

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline';">
     <title>Eclipse Delta v8.0 - Sistem Trading Futures Otomatis</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -362,13 +363,13 @@
                 </div>
                 <form class="contact-form">
                     <div class="form-group">
-                        <input type="text" placeholder="Nama Anda" required>
+                        <input type="text" name="nama" placeholder="Nama Anda" maxlength="100" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" maxlength="100" required>
                     </div>
                     <div class="form-group">
-                        <select required>
+                        <select name="paket" required>
                             <option value="">Pilih Paket</option>
                             <option value="starter">Starter (Gratis)</option>
                             <option value="professional">Professional ($99/bulan)</option>
@@ -376,7 +377,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Pesan atau pertanyaan..." rows="4"></textarea>
+                        <textarea name="pesan" placeholder="Pesan atau pertanyaan..." rows="4" maxlength="1000"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-large btn-full">
                         <i class="fas fa-paper-plane"></i> Kirim Pesan
