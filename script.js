@@ -244,8 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
     simulateTrading();
     
     // Add parallax effect to gradient orbs
+    const orbs = document.querySelectorAll('.gradient-orb');
     window.addEventListener('mousemove', function(e) {
-        const orbs = document.querySelectorAll('.gradient-orb');
         const mouseX = e.clientX / window.innerWidth;
         const mouseY = e.clientY / window.innerHeight;
         
