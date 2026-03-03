@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.firebaseio.com https://*.firebaseapp.com https://*.googleapis.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com;">
+    <title>Admin - Eclipse Delta</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-brand">
+                    <i class="fas fa-chart-line"></i>
+                    <span>ECLIPSE ADMIN</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin.html" class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cogs"></i>
+                    <span>System Health</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Content</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to App</span>
+                </a>
+                <a href="#" class="nav-item" id="dashboard-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="menu-toggle" class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Admin Dashboard</h1>
+                </div>
+
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name user-display-name">Admin</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                        <div class="avatar user-avatar" style="background-color: var(--danger-color);">AD</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <div class="dashboard-body">
+                <!-- Overview Cards -->
+                <div class="overview-cards">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Total Users</span>
+                            <div class="stat-icon info">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">1,245</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12 today</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Active Subscriptions</span>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">842</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>68% conversion rate</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>System Uptime</span>
+                            <div class="stat-icon success">
+                                <i class="fas fa-server"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">99.99%</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-check"></i>
+                            <span>All systems operational</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Table -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Recent Users</h2>
+                        <a href="#" class="panel-action">View All Users</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Plan</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>jane.s@example.com</td>
+                                    <td>Professional</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>2 mins ago</td>
+                                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Mike Johnson</td>
+                                    <td>mike.j@example.com</td>
+                                    <td>Starter</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>1 hour ago</td>
+                                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Williams</td>
+                                    <td>sarah.w@example.com</td>
+                                    <td>Enterprise</td>
+                                    <td><span class="status-badge active">Active</span></td>
+                                    <td>1 day ago</td>
+                                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Edit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

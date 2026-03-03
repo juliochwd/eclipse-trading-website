@@ -143,3 +143,58 @@ website/
   🚀 Quantum Intelligence for Modern Trading 🚀
   
 </div>
+
+## 🚀 Enterprise Platform Setup Guide
+
+Welcome to the full-featured trading platform! The application is designed to be fully functional on a Free-Tier stack (GitHub Pages + Firebase Spark Plan).
+
+### Phase 1: Authentication & Dashboard Added
+
+We've extended the landing page into a full platform with the following pages:
+- `/login.html`
+- `/register.html`
+- `/forgot-password.html`
+- `/dashboard.html`
+- `/admin.html`
+
+### 🔧 Setup Instructions
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/juliochwd/eclipse-trading-website.git
+   ```
+
+2. **Configure Firebase (Free Tier)**:
+   - Go to [Firebase Console](https://console.firebase.google.com/) and create a new project.
+   - Enable **Authentication** (Email/Password & Google providers).
+   - Enable **Firestore Database** (start in production mode).
+   - Set up Firestore Rules (Basic Example):
+     ```javascript
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /users/{userId} {
+           allow read, write: if request.auth != null && request.auth.uid == userId;
+         }
+       }
+     }
+     ```
+
+3. **Set Environment Variables**:
+   - Copy the `.env.example` file to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - *Since this is a vanilla JS application without a bundler*, you need to manually copy the keys from your Firebase project settings into `assets/js/firebase-config.js` for local development or handle them securely in your production build pipeline.
+
+### 🌐 Deployment (GitHub Pages)
+
+The project is already configured for GitHub Pages.
+1. Make sure your `.env` and `firebase-config.js` with real keys are **NOT** committed to public version control if your rules are not tight.
+2. In the repository settings, go to Pages, and select the `main` branch as the source.
+
+### 🛡️ Security
+
+- We enforce Content Security Policy headers in the HTML.
+- Firebase Auth rules ensure that users can only access their own data.
+- User input is sanitized to prevent XSS.

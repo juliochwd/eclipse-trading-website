@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.firebaseio.com https://*.firebaseapp.com https://*.googleapis.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com;">
+    <title>Dashboard - Eclipse Delta</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-brand">
+                    <i class="fas fa-chart-line"></i>
+                    <span>ECLIPSE</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Trades</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-signal"></i>
+                    <span>Signals</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-robot"></i>
+                    <span>Bot Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" id="dashboard-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="menu-toggle" class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+
+                <div class="header-right">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name user-display-name">Loading...</span>
+                            <span class="user-role user-display-role">Trader</span>
+                        </div>
+                        <div class="avatar user-avatar">--</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <div class="dashboard-body">
+                <!-- Overview Cards -->
+                <div class="overview-cards">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Account Balance</span>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">$15,011.02</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2.4% this week</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Today's P&L</span>
+                            <div class="stat-icon success">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">+$234.50</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-check"></i>
+                            <span>Target reached</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Open Trades</span>
+                            <div class="stat-icon warning">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-change neutral">
+                            <i class="fas fa-minus"></i>
+                            <span>2 MNQ, 1 CL</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span>Win Rate</span>
+                            <div class="stat-icon info">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">61.7%</div>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+1.2% from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="dashboard-grid">
+                    <!-- Charts & Tables Column -->
+                    <div class="main-column" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                        <!-- Performance Chart -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Performance Overview</h2>
+                                <select class="form-group" style="padding: 0.25rem; background: transparent; color: var(--text-secondary); border: 1px solid var(--dark-border); border-radius: 4px;">
+                                    <option>This Year</option>
+                                    <option>Last 30 Days</option>
+                                    <option>Last 7 Days</option>
+                                </select>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="performance-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Active Trades Table -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Active Trades</h2>
+                                <a href="#" class="panel-action">View All</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Asset</th>
+                                            <th>Type</th>
+                                            <th>Entry</th>
+                                            <th>Current</th>
+                                            <th>P&L</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="active-trades-body">
+                                        <tr>
+                                            <td><strong>MNQ</strong> (Micro Nasdaq)</td>
+                                            <td><span class="status-badge buy">BUY</span></td>
+                                            <td>17520.50</td>
+                                            <td id="price-mnq">17540.25</td>
+                                            <td id="pnl-mnq" class="text-success font-weight-bold">+$39.50</td>
+                                            <td><span class="status-badge active">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>CL</strong> (Crude Oil)</td>
+                                            <td><span class="status-badge sell">SELL</span></td>
+                                            <td>82.40</td>
+                                            <td>82.10</td>
+                                            <td class="text-success font-weight-bold">+$300.00</td>
+                                            <td><span class="status-badge active">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>MGC</strong> (Micro Gold)</td>
+                                            <td><span class="status-badge buy">BUY</span></td>
+                                            <td>2150.10</td>
+                                            <td>2148.50</td>
+                                            <td class="text-danger font-weight-bold">-$16.00</td>
+                                            <td><span class="status-badge active">Active</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="side-column" style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                        <!-- Quick Actions -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Quick Actions</h2>
+                            </div>
+                            <div class="quick-actions">
+                                <a href="#" class="action-btn">
+                                    <i class="fas fa-link"></i>
+                                    <span>Connect Broker</span>
+                                </a>
+                                <a href="#" class="action-btn">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Trading Settings</span>
+                                </a>
+                                <a href="#" class="action-btn">
+                                    <i class="fas fa-headset"></i>
+                                    <span>Support Center</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Recent Signals -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Recent Signals</h2>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid var(--dark-border);">
+                                    <div>
+                                        <div style="font-weight: 600;">6J (JPY/USD)</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">2 hours ago</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span class="status-badge sell">SELL</span>
+                                        <div style="font-size: 0.8rem; margin-top: 0.25rem;" class="text-success">Win</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid var(--dark-border);">
+                                    <div>
+                                        <div style="font-weight: 600;">MES (Micro SP500)</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">5 hours ago</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span class="status-badge buy">BUY</span>
+                                        <div style="font-size: 0.8rem; margin-top: 0.25rem;" class="text-success">Win</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600;">M6A (AUD/USD)</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">1 day ago</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span class="status-badge buy">BUY</span>
+                                        <div style="font-size: 0.8rem; margin-top: 0.25rem;" class="text-danger">Loss</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="panel-action" style="margin-top: 1rem; text-align: center;">View All Signals</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

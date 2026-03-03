@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline';">
     <title>Eclipse Delta v8.0 - Sistem Trading Futures Otomatis</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -24,7 +24,11 @@
                 <li><a href="#pricing">Harga</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="#contact" class="btn btn-primary">Mulai Sekarang</a>
+                <a href="login.html" class="btn btn-outline" id="nav-login-btn">Masuk</a>
+                <a href="#contact" class="btn btn-primary" id="nav-cta-btn">Mulai Sekarang</a>
+                <button id="lang-toggle" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-left: 0.5rem;" title="Switch Language">
+                    <i class="fas fa-globe"></i> <span id="current-lang">ID</span>
+                </button>
             </div>
             <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
@@ -427,6 +431,16 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/app.js"></script>
+
 </body>
 </html>
