@@ -1,0 +1,52 @@
+const fs = require('fs');
+let code = fs.readFileSync('script.js', 'utf8');
+
+const search = `    // Animate elements on scroll
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
+
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    };
+
+    // Set initial state for animated elements
+    const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = \`all 0.6s ease \${index * 0.1}s\`;
+    });
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Trigger once on load`;
+
+const replace = `    // Set initial state for animated elements
+    const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = \`all 0.6s ease \${index * 0.1}s\`;
+    });
+
+    // Animate elements on scroll using IntersectionObserver
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -150px 0px' });
+
+    animatedElements.forEach(element => scrollObserver.observe(element));`;
+
+code = code.replace(search, replace);
+fs.writeFileSync('script.js', code);
