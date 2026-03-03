@@ -1,0 +1,58 @@
+{
+    "name": "Eclipse Delta Trading",
+    "short_name": "Eclipse",
+    "description": "Platform Trading Futures Otomatis dengan Kecerdasan Kuantum",
+    "start_url": "/eclipse-trading-website/",
+    "scope": "/eclipse-trading-website/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "lang": "id",
+    "icons": [
+        {
+            "src": "assets/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "short_name": "Dashboard",
+            "description": "Buka Trading Dashboard",
+            "url": "/eclipse-trading-website/dashboard.html",
+            "icons": [
+                {
+                    "src": "assets/icons/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Signals",
+            "short_name": "Signals",
+            "description": "Lihat Live Trading Signals",
+            "url": "/eclipse-trading-website/signals.html",
+            "icons": [
+                {
+                    "src": "assets/icons/icon-192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "screenshots": [],
+    "categories": [
+        "finance",
+        "business"
+    ],
+    "related_applications": []
+}

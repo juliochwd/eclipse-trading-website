@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://juliochwd.github.io/eclipse-trading-website/sitemap.xml
+
+# Disallow admin pages from search engines
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /trades.html
+Disallow: /signals.html
+Disallow: /analytics.html
+Disallow: /settings.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /forgot-password.html

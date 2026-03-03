@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eclipse Delta - Live Trading Signals dengan analisis kuantum">
+    <title>Signals - Eclipse Delta</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        .signal-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .signal-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .signal-card.buy {
+            border-left: 3px solid var(--success-color);
+        }
+
+        .signal-card.sell {
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .signal-asset {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .signal-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .signal-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+        }
+
+        .signal-level {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .signal-level-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .signal-level-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .signal-prob {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .prob-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .prob-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            padding: 0.35rem 0.9rem;
+            border-radius: 100px;
+            border: 1px solid var(--dark-border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .filter-chip.active,
+        .filter-chip:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-brand"><i class="fas fa-chart-line"></i><span>ECLIPSE</span></a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Overview</span></a>
+                <a href="trades.html" class="nav-item"><i class="fas fa-exchange-alt"></i><span>Trades</span></a>
+                <a href="signals.html" class="nav-item active"><i class="fas fa-signal"></i><span>Signals</span></a>
+                <a href="analytics.html" class="nav-item"><i class="fas fa-chart-pie"></i><span>Analytics</span></a>
+                <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" id="dashboard-logout"><i
+                        class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="menu-toggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+                    <h1 class="page-title">Live Signals</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-info"><span class="user-name user-display-name">Loading...</span><span
+                                class="user-role user-display-role">Trader</span></div>
+                        <div class="avatar user-avatar">--</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-body">
+                <!-- Live indicator -->
+                <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+                    <div style="display:flex;align-items:center;font-size:0.85rem;color:var(--success-color);">
+                        <span class="live-dot"></span> LIVE - Update setiap 15 menit
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);" id="last-scan-time">
+                        Scan terakhir: <span id="scan-timer">Baru saja</span>
+                    </div>
+                </div>
+
+                <!-- Stats row -->
+                <div class="overview-cards" style="margin-bottom:1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Signal Hari Ini</span>
+                            <div class="stat-icon success"><i class="fas fa-bell"></i></div>
+                        </div>
+                        <div class="stat-value" id="signals-today">7</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Akurasi 30 Hari</span>
+                            <div class="stat-icon primary"><i class="fas fa-bullseye"></i></div>
+                        </div>
+                        <div class="stat-value">63.2%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Rata-rata P(Win)</span>
+                            <div class="stat-icon info"><i class="fas fa-brain"></i></div>
+                        </div>
+                        <div class="stat-value">62.8%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Asset Aktif</span>
+                            <div class="stat-icon warning"><i class="fas fa-layer-group"></i></div>
+                        </div>
+                        <div class="stat-value">6</div>
+                    </div>
+                </div>
+
+                <!-- Filter chips -->
+                <div class="filter-bar">
+                    <span style="font-size:0.85rem;color:var(--text-secondary);font-weight:500;">Filter:</span>
+                    <button class="filter-chip active" data-filter="all">Semua</button>
+                    <button class="filter-chip" data-filter="BUY">BUY</button>
+                    <button class="filter-chip" data-filter="SELL">SELL</button>
+                    <button class="filter-chip" data-filter="MNQ">MNQ</button>
+                    <button class="filter-chip" data-filter="MGC">MGC</button>
+                    <button class="filter-chip" data-filter="CL">CL</button>
+                    <button class="filter-chip" data-filter="MES">MES</button>
+                </div>
+
+                <!-- Signals Grid -->
+                <div class="signals-grid" id="signals-grid">
+                    <!-- Generated by JS -->
+                </div>
+
+                <!-- History header -->
+                <div style="margin:2rem 0 1rem;">
+                    <h2 style="font-size:1.1rem;font-weight:700;">📜 Riwayat Signal (7 Hari)</h2>
+                </div>
+                <div class="panel">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Waktu</th>
+                                    <th>Asset</th>
+                                    <th>Arah</th>
+                                    <th>Entry</th>
+                                    <th>TP</th>
+                                    <th>SL</th>
+                                    <th>P(Win)</th>
+                                    <th>Hasil</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script>
+        const ASSETS_CONFIG = {
+            MNQ: { name: 'Micro Nasdaq', basePrice: 17540 },
+            MES: { name: 'Micro S&P 500', basePrice: 5250 },
+            MGC: { name: 'Micro Gold', basePrice: 2150 },
+            CL: { name: 'Crude Oil', basePrice: 82.4 },
+            '6J': { name: 'JPY/USD Futures', basePrice: 0.00668 },
+            M6A: { name: 'AUD/USD Futures', basePrice: 0.6525 }
+        };
+
+        function genSignals() {
+            const assets = Object.keys(ASSETS_CONFIG);
+            const now = new Date();
+            return assets.map((asset, i) => {
+                const cfg = ASSETS_CONFIG[asset];
+                const dir = Math.random() > 0.5 ? 'BUY' : 'SELL';
+                const prob = +(55 + Math.random() * 20).toFixed(1);
+                const spread = cfg.basePrice * 0.005;
+                const entry = +(cfg.basePrice + (Math.random() - 0.5) * spread).toFixed(asset === '6J' || asset === 'M6A' ? 5 : 2);
+                const tp = dir === 'BUY' ? +(entry * 1.008).toFixed(2) : +(entry * 0.992).toFixed(2);
+                const sl = dir === 'BUY' ? +(entry * 0.994).toFixed(2) : +(entry * 1.006).toFixed(2);
+                const t = new Date(now - i * 12 * 60000);
+                return { asset, name: cfg.name, dir, prob, entry, tp, sl, time: t.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) };
+            });
+        }
+
+        function genHistory() {
+            const assets = ['MNQ', 'MES', 'MGC', 'CL', '6J', 'M6A'];
+            const now = new Date();
+            return Array.from({ length: 20 }, (_, i) => {
+                const asset = assets[i % assets.length];
+                const dir = i % 2 === 0 ? 'BUY' : 'SELL';
+                const prob = +(55 + Math.random() * 20).toFixed(1);
+                const result = prob > 60 ? (Math.random() > 0.38 ? 'WIN' : 'LOSS') : (Math.random() > 0.45 ? 'WIN' : 'LOSS');
+                const d = new Date(now - i * 3 * 3600000);
+                return { asset, dir, prob, result, time: d.toLocaleDateString('id-ID') + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }), entry: +(Math.random() * 1000 + 100).toFixed(2), tp: +(Math.random() * 1000 + 108).toFixed(2), sl: +(Math.random() * 1000 + 95).toFixed(2) };
+            });
+        }
+
+        let signals = genSignals();
+        let activeFilter = 'all';
+
+        function renderSignals() {
+            const grid = document.getElementById('signals-grid');
+            let filtered = activeFilter === 'all' ? signals : signals.filter(s => s.asset === activeFilter || s.dir === activeFilter);
+            grid.innerHTML = filtered.map(s => `
+        <div class="signal-card ${s.dir.toLowerCase()}">
+            <div class="signal-header">
+                <div>
+                    <div class="signal-asset">${s.asset} <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted)">${s.name}</span></div>
+                    <div class="signal-time"><i class="fas fa-clock"></i> ${s.time}</div>
+                </div>
+                <span class="status-badge ${s.dir.toLowerCase()}">${s.dir}</span>
+            </div>
+            <div class="signal-levels">
+                <div class="signal-level"><span class="signal-level-label">ENTRY</span><span class="signal-level-value">${s.entry}</span></div>
+                <div class="signal-level"><span class="signal-level-label">TAKE PROFIT</span><span class="signal-level-value" style="color:var(--success-color)">${s.tp}</span></div>
+                <div class="signal-level"><span class="signal-level-label">STOP LOSS</span><span class="signal-level-value" style="color:var(--danger-color)">${s.sl}</span></div>
+            </div>
+            <div class="signal-prob">
+                <span style="font-size:0.75rem;color:var(--text-secondary);white-space:nowrap;">P(Win) ${s.prob}%</span>
+                <div class="prob-bar"><div class="prob-fill" style="width:${s.prob}%"></div></div>
+                <span style="font-size:0.8rem;font-weight:700;color:var(--primary-color)">${s.prob}%</span>
+            </div>
+        </div>
+    `).join('') || '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center;padding:2rem;">Tidak ada signal untuk filter ini</p>';
+        }
+
+        function renderHistory() {
+            const hist = genHistory();
+            document.getElementById('history-body').innerHTML = hist.map(s => `
+        <tr>
+            <td style="color:var(--text-muted);font-size:0.8rem">${s.time}</td>
+            <td><strong>${s.asset}</strong></td>
+            <td><span class="status-badge ${s.dir.toLowerCase()}">${s.dir}</span></td>
+            <td>${s.entry}</td>
+            <td style="color:var(--success-color)">${s.tp}</td>
+            <td style="color:var(--danger-color)">${s.sl}</td>
+            <td>${s.prob}%</td>
+            <td><span class="status-badge ${s.result === 'WIN' ? 'active' : 'sell'}">${s.result}</span></td>
+        </tr>
+    `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSignals();
+            renderHistory();
+
+            // Filter chips
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    activeFilter = chip.dataset.filter;
+                    renderSignals();
+                });
+            });
+
+            // Refresh timer
+            let elapsed = 0;
+            setInterval(() => {
+                elapsed++;
+                const el = document.getElementById('scan-timer');
+                if (el) el.textContent = elapsed < 60 ? `${elapsed}s lalu` : `${Math.floor(elapsed / 60)}m lalu`;
+                // Simulate new signal every 15s in demo
+                if (elapsed % 15 === 0) {
+                    signals = genSignals();
+                    renderSignals();
+                    elapsed = 0;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

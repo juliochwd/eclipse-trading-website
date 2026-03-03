@@ -1001,3 +1001,126 @@ section {
     outline-offset: 4px;
     border-radius: 4px;
 }
+
+/* ============================================================
+   Testimonials Section
+   ============================================================ */
+.testimonials { background: linear-gradient(180deg, var(--dark-bg) 0%, rgba(99,102,241,0.05) 100%); }
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.testimonial-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.testimonial-card:hover { transform: translateY(-4px); border-color: var(--primary-color); }
+
+.testimonial-card.featured {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 40px rgba(99,102,241,0.2);
+}
+
+.testimonial-stars { color: #f59e0b; margin-bottom: 16px; font-size: 14px; }
+.testimonial-stars i { margin-right: 3px; }
+
+.testimonial-text {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.testimonial-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--dark-border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+}
+
+.testimonial-name { font-weight: 700; font-size: 14px; }
+.testimonial-role { font-size: 12px; color: var(--text-muted); }
+
+@media(max-width:1024px) { .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; } }
+@media(max-width:768px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   FAQ Section
+   ============================================================ */
+.faq { background: linear-gradient(180deg, rgba(99,102,241,0.05) 0%, var(--dark-bg) 100%); }
+
+.faq-list { max-width: 720px; margin: 0 auto; }
+
+.faq-item {
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+}
+
+.faq-item.open { border-color: var(--primary-color); }
+
+.faq-question {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+    padding: 20px 24px; background: var(--dark-card); border: none; cursor: pointer;
+    color: var(--text-primary); font-size: 16px; font-weight: 600; text-align: left;
+    transition: background 0.2s;
+}
+
+.faq-question:hover { background: rgba(99,102,241,0.08); }
+
+.faq-icon { font-size: 14px; color: var(--primary-color); flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+    background: rgba(255,255,255,0.02);
+}
+
+.faq-answer.open { max-height: 300px; }
+
+.faq-answer p {
+    padding: 0 24px 20px; color: var(--text-secondary); line-height: 1.8; font-size: 15px;
+}
+
+/* ============================================================
+   Filter select (shared across app pages)
+   ============================================================ */
+.filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.filter-select:focus { outline: none; border-color: var(--primary-color); }
+.filter-select option { background: var(--dark-card); }
+
+/* text helpers */
+.text-success { color: var(--success-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.font-weight-bold { font-weight: 700; }

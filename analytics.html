@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eclipse Delta - Analytics & Performance Dashboard">
+    <title>Analytics - Eclipse Delta</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        .period-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .period-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--dark-border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .period-btn.active {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .chart-full {
+            grid-column: 1 / -1;
+        }
+
+        @media(max-width:768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-full {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-brand"><i class="fas fa-chart-line"></i><span>ECLIPSE</span></a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Overview</span></a>
+                <a href="trades.html" class="nav-item"><i class="fas fa-exchange-alt"></i><span>Trades</span></a>
+                <a href="signals.html" class="nav-item"><i class="fas fa-signal"></i><span>Signals</span></a>
+                <a href="analytics.html" class="nav-item active"><i
+                        class="fas fa-chart-pie"></i><span>Analytics</span></a>
+                <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" id="dashboard-logout"><i
+                        class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="menu-toggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+                    <h1 class="page-title">Analytics</h1>
+                </div>
+                <div class="header-right">
+                    <div class="period-tabs">
+                        <button class="period-btn" data-period="7d">7D</button>
+                        <button class="period-btn active" data-period="30d">30D</button>
+                        <button class="period-btn" data-period="90d">90D</button>
+                        <button class="period-btn" data-period="1y">1Y</button>
+                    </div>
+                    <div class="user-profile" style="margin-left:1rem;">
+                        <div class="user-info"><span class="user-name user-display-name">Loading...</span><span
+                                class="user-role user-display-role">Trader</span></div>
+                        <div class="avatar user-avatar">--</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-body">
+                <!-- KPI Row -->
+                <div class="overview-cards">
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Total Profit</span>
+                            <div class="stat-icon success"><i class="fas fa-dollar-sign"></i></div>
+                        </div>
+                        <div class="stat-value" style="color:var(--success-color)">+$15,011</div>
+                        <div class="stat-change positive"><i class="fas fa-arrow-up"></i><span
+                                id="kpi-profit-change">+$1,240 vs prev period</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Win Rate</span>
+                            <div class="stat-icon primary"><i class="fas fa-percentage"></i></div>
+                        </div>
+                        <div class="stat-value" id="kpi-winrate">61.7%</div>
+                        <div class="stat-change positive"><i class="fas fa-arrow-up"></i><span>+1.2% vs prev</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Profit Factor</span>
+                            <div class="stat-icon info"><i class="fas fa-balance-scale"></i></div>
+                        </div>
+                        <div class="stat-value">2.31</div>
+                        <div class="stat-change positive"><i class="fas fa-check"></i><span>Excellent</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header"><span>Max Drawdown</span>
+                            <div class="stat-icon warning"><i class="fas fa-arrow-down"></i></div>
+                        </div>
+                        <div class="stat-value" style="color:var(--warning-color)">-8.4%</div>
+                        <div class="stat-change neutral"><i class="fas fa-minus"></i><span>Terkontrol</span></div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <!-- Equity Curve -->
+                    <div class="panel chart-full">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-chart-line" style="color:var(--primary-color)"></i>
+                                Equity Curve</h2>
+                        </div>
+                        <div class="chart-container" style="height:280px;">
+                            <canvas id="equity-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Monthly P&L -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-chart-bar" style="color:var(--success-color)"></i>
+                                Monthly P&L</h2>
+                        </div>
+                        <div class="chart-container" style="height:220px;">
+                            <canvas id="monthly-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Asset Breakdown -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-chart-pie"
+                                    style="color:var(--secondary-color)"></i> Asset Breakdown</h2>
+                        </div>
+                        <div class="chart-container" style="height:220px;">
+                            <canvas id="asset-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Win/Loss Distribution -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-circle-half-stroke"
+                                    style="color:var(--warning-color)"></i> Win/Loss Streak</h2>
+                        </div>
+                        <div class="chart-container" style="height:220px;">
+                            <canvas id="streak-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Best/Worst Hours -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-clock" style="color:var(--accent-color)"></i>
+                                Trading Hours Heatmap</h2>
+                        </div>
+                        <div class="chart-container" style="height:220px;">
+                            <canvas id="hours-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Stats Table -->
+                    <div class="panel chart-full">
+                        <div class="panel-header">
+                            <h2 class="panel-title">Detail Statistik</h2>
+                        </div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Best Trade
+                                </div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--success-color)">+$1,978.40
+                                </div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Worst
+                                    Trade</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--danger-color)">-$930.00</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Max Win
+                                    Streak</div>
+                                <div style="font-size:1.1rem;font-weight:700;">22 trades</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Avg Win
+                                </div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--success-color)">+$406.24</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Avg Loss
+                                </div>
+                                <div style="font-size:1.1rem;font-weight:700;color:var(--danger-color)">-$175.45</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:1rem;">
+                                <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.35rem;">Total
+                                    Trades</div>
+                                <div style="font-size:1.1rem;font-weight:700;">60</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script>
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        const chartDefaults = {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { boxWidth: 12 } }, tooltip: { backgroundColor: '#1e293b', titleColor: '#f8fafc', bodyColor: '#e2e8f0', borderColor: '#334155', borderWidth: 1 } }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Equity Curve
+            new Chart(document.getElementById('equity-chart'), {
+                type: 'line',
+                data: {
+                    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+                    datasets: [{
+                        label: 'Equity ($)', fill: true, tension: 0.4,
+                        data: [2500, 4200, 5800, 7100, 10200, 13450, 15011],
+                        borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.08)',
+                        pointBackgroundColor: '#6366f1', pointBorderColor: '#fff', borderWidth: 2
+                    }]
+                },
+                options: { ...chartDefaults, scales: { x: { grid: { color: 'rgba(255,255,255,0.04)' } }, y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => '$' + v.toLocaleString() } } } }
+            });
+
+            // Monthly P&L
+            new Chart(document.getElementById('monthly-chart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+                    datasets: [{
+                        label: 'P&L ($)',
+                        data: [2500, 1700, 1600, 1300, 3100, 3250, 1561],
+                        backgroundColor: ['#10b981', '#10b981', '#10b981', '#10b981', '#10b981', '#10b981', '#10b981'],
+                        borderRadius: 6
+                    }]
+                },
+                options: { ...chartDefaults, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => '$' + v } } } }
+            });
+
+            // Asset Breakdown (Doughnut)
+            new Chart(document.getElementById('asset-chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['MNQ', 'MES', 'MGC', 'CL', '6J', 'M6A'],
+                    datasets: [{ data: [35, 25, 15, 12, 8, 5], backgroundColor: ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#3b82f6'], borderWidth: 2, borderColor: '#1e293b' }]
+                },
+                options: { ...chartDefaults, cutout: '65%', plugins: { legend: { position: 'right', labels: { boxWidth: 12 } }, tooltip: chartDefaults.plugins.tooltip } }
+            });
+
+            // Win/Loss streak (bar)
+            new Chart(document.getElementById('streak-chart'), {
+                type: 'bar',
+                data: {
+                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'],
+                    datasets: [
+                        { label: 'Win Streak', data: [12, 8, 5, 4, 2, 2, 1, 1, 1, 1], backgroundColor: 'rgba(16,185,129,0.7)', borderRadius: 4 },
+                        { label: 'Loss Streak', data: [8, 5, 3, 2, 1, 1, 0, 0, 0, 0], backgroundColor: 'rgba(239,68,68,0.7)', borderRadius: 4 }
+                    ]
+                },
+                options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { position: 'top', labels: { boxWidth: 12 } } }, scales: { x: { grid: { display: false }, stacked: false }, y: { grid: { color: 'rgba(255,255,255,0.04)' } } } }
+            });
+
+            // Trading Hours
+            const hourLabels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+            const hourData = hourLabels.map((_, i) => {
+                if (i >= 9 && i <= 11) return +(Math.random() * 3 + 3).toFixed(1);
+                if (i >= 13 && i <= 15) return +(Math.random() * 3 + 2).toFixed(1);
+                if (i >= 20 && i <= 22) return +(Math.random() * 2 + 1).toFixed(1);
+                return +(Math.random() * 1).toFixed(1);
+            });
+            new Chart(document.getElementById('hours-chart'), {
+                type: 'bar',
+                data: {
+                    labels: hourLabels,
+                    datasets: [{ label: 'Avg P&L/hr ($)', data: hourData, backgroundColor: hourData.map(v => v > 2 ? 'rgba(99,102,241,0.8)' : 'rgba(99,102,241,0.3)'), borderRadius: 3 }]
+                },
+                options: { ...chartDefaults, scales: { x: { grid: { display: false }, ticks: { maxTicksLimit: 8 } }, y: { grid: { color: 'rgba(255,255,255,0.04)' } } } }
+            });
+
+            // Period tabs
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
