@@ -167,6 +167,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hamburger {
+    background: transparent;
+    border: none;
+    padding: 0;
     display: none;
     flex-direction: column;
     gap: 5px;
@@ -991,4 +994,10 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-muted);
+}
+
+.hamburger:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
 }

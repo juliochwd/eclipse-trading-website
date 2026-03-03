@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hamburger) {
         hamburger.addEventListener('click', function() {
             this.classList.toggle('active');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
             
             // Create mobile menu if it doesn't exist
             let mobileMenu = document.querySelector('.mobile-menu');
