@@ -246,8 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add parallax effect to gradient orbs
     window.addEventListener('mousemove', function(e) {
         const orbs = document.querySelectorAll('.gradient-orb');
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
         
         orbs.forEach((orb, index) => {
             const speed = (index + 1) * 20;
