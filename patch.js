@@ -1,41 +1,34 @@
 const fs = require('fs');
-const content = fs.readFileSync('script.js', 'utf8');
 
-const targetStr = `    // Add parallax effect to gradient orbs
-    window.addEventListener('mousemove', function(e) {
-        const orbs = document.querySelectorAll('.gradient-orb');
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
+let html = fs.readFileSync('index.html', 'utf8');
 
-        orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 20;
-            const x = (window.innerWidth / 2 - e.clientX) / speed;
-            const y = (window.innerHeight / 2 - e.clientY) / speed;
+const targetNav = `<div class="nav-cta">
+                <a href="#contact" class="btn btn-primary">Mulai Sekarang</a>
+            </div>`;
+const replacementNav = `<div class="nav-cta">
+                <a href="login.html" class="btn btn-outline" id="nav-login-btn">Masuk</a>
+                <a href="#contact" class="btn btn-primary" id="nav-cta-btn">Mulai Sekarang</a>
+                <button id="lang-toggle" class="btn btn-outline" style="padding: 0.5rem 1rem; margin-left: 0.5rem;" title="Switch Language">
+                    <i class="fas fa-globe"></i> <span id="current-lang">ID</span>
+                </button>
+            </div>`;
 
-            orb.style.transform = \`translate(\${x}px, \${y}px)\`;
-        });
-    });`;
+html = html.replace(targetNav, replacementNav);
 
-const replacementStr = `    // Add parallax effect to gradient orbs
-    const orbs = document.querySelectorAll('.gradient-orb');
-    window.addEventListener('mousemove', function(e) {
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
+// Add Firebase and i18n scripts before the end of body
+const scriptTag = `<script src="assets/js/app.js"></script>`;
+const newScripts = `
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-        orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 20;
-            const x = (window.innerWidth / 2 - e.clientX) / speed;
-            const y = (window.innerHeight / 2 - e.clientY) / speed;
+    <!-- Custom Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/app.js"></script>
+`;
 
-            orb.style.transform = \`translate(\${x}px, \${y}px)\`;
-        });
-    });`;
+html = html.replace(scriptTag, newScripts);
 
-if (!content.includes(targetStr)) {
-    console.error("Target string not found in script.js");
-    process.exit(1);
-}
-
-const newContent = content.replace(targetStr, replacementStr);
-fs.writeFileSync('script.js', newContent);
-console.log("Patched script.js successfully");
+fs.writeFileSync('index.html', html);
