@@ -9,12 +9,13 @@
  */
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDol3Uulg9x8XXyEyPyh5fmHGY0bQr1YVE",
+    authDomain: "eclipse-55b44.firebaseapp.com",
+    projectId: "eclipse-55b44",
+    storageBucket: "eclipse-55b44.firebasestorage.app",
+    messagingSenderId: "419074122460",
+    appId: "1:419074122460:web:862912407d2cc49d130a19",
+    measurementId: "G-JP5VX9WKSY"
 };
 
 // Detect if this is a placeholder config
