@@ -1,0 +1,17 @@
+{
+    "hosting": {
+        "site": "eclipsedelta",
+        "public": ".",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**",
+            "test.py",
+            "benchmark.js",
+            "walkthrough.md",
+            "implementation_plan.md",
+            "task.md"
+        ],
+        "cleanUrls": true
+    }
+}
