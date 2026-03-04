@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : 'Pendaftaran berhasil! Silakan cek email untuk verifikasi.',
                     'success');
 
-                setTimeout(() => { window.location.href = 'login.html'; }, 2500);
+                setTimeout(() => { window.location.href = 'login'; }, 2500);
             } catch (error) {
                 console.error('Register Error:', error);
                 showAlert(getErrorMessage(error.code), 'error');
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? 'Demo: Email reset (simulasi) telah dikirim.'
                     : 'Link reset dikirim! Cek email Anda.',
                     'success');
-                setTimeout(() => { window.location.href = 'login.html'; }, 3000);
+                setTimeout(() => { window.location.href = 'login'; }, 3000);
             } catch (error) {
                 console.error('Reset Error:', error);
                 showAlert(getErrorMessage(error.code), 'error');
@@ -167,33 +167,66 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Google Sign-In ----
     if (googleBtn) {
         googleBtn.addEventListener('click', async () => {
+            const origHtml = googleBtn.innerHTML;
             try {
                 googleBtn.disabled = true;
                 googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghubungkan...';
 
-                let provider;
-                if (!IS_DEMO_MODE && window.firebase) {
-                    provider = new firebase.auth.GoogleAuthProvider();
+                if (IS_DEMO_MODE) {
+                    // Demo mode: mock Google login
+                    const authUser = { uid: 'google-demo-001', email: 'google.demo@eclipse.ai', displayName: 'Google Demo User', photoURL: null };
+                    sessionStorage.setItem('eclipse_demo_user', JSON.stringify(authUser));
+                    window.location.href = 'dashboard';
+                    return;
                 }
-                const result = await window.firebaseAuth.signInWithPopup(provider);
 
-                if (result.additionalUserInfo?.isNewUser && window.firebaseDb) {
-                    await window.firebaseDb.collection('users').doc(result.user.uid).set({
-                        email: result.user.email,
-                        name: result.user.displayName,
-                        photoURL: result.user.photoURL,
-                        role: 'user',
-                        createdAt: new Date().toISOString(),
-                        trading: { balance: 0, totalProfit: 0, winRate: 0 }
-                    });
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.addScope('email');
+                provider.addScope('profile');
+
+                try {
+                    // Try popup first
+                    const result = await window.firebaseAuth.signInWithPopup(provider);
+                    if (result.additionalUserInfo?.isNewUser && window.firebaseDb) {
+                        await window.firebaseDb.collection('users').doc(result.user.uid).set({
+                            email: result.user.email,
+                            name: result.user.displayName,
+                            photoURL: result.user.photoURL,
+                            role: 'user',
+                            createdAt: new Date().toISOString(),
+                            trading: { balance: 0, totalProfit: 0, winRate: 0 }
+                        });
+                    }
+                } catch (popupError) {
+                    if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/popup-closed-by-user') {
+                        // Fallback to redirect
+                        await window.firebaseAuth.signInWithRedirect(provider);
+                    } else {
+                        throw popupError;
+                    }
                 }
+
             } catch (error) {
                 console.error('Google Error:', error);
                 showAlert(getErrorMessage(error.code), 'error');
                 googleBtn.disabled = false;
-                googleBtn.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"> Google';
+                googleBtn.innerHTML = origHtml;
             }
         });
+
+        // Handle redirect result on page load
+        if (!IS_DEMO_MODE && window.firebaseAuth) {
+            window.firebaseAuth.getRedirectResult().then(result => {
+                if (result && result.user) {
+                    // Redirect result handled by onAuthStateChanged
+                    console.log('Google redirect login success');
+                }
+            }).catch(error => {
+                if (error.code && error.code !== 'auth/no-current-user') {
+                    showAlert(getErrorMessage(error.code), 'error');
+                }
+            });
+        }
     }
 
     // ---- Logout (for auth pages) ----
@@ -207,18 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Auth State Listener ----
     window.firebaseAuth.onAuthStateChanged((user) => {
         const path = window.location.pathname;
-        const isAuthPage = ['login.html', 'register.html', 'forgot-password.html']
+        const isAuthPage = ['login', 'register', 'forgot-password']
             .some(p => path.includes(p));
 
         if (user) {
             if (isAuthPage) {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'dashboard';
             }
         } else {
-            const isProtectedPage = ['dashboard.html', 'trades.html', 'signals.html',
-                'analytics.html', 'settings.html', 'admin.html'].some(p => path.includes(p));
+            const isProtectedPage = ['dashboard', 'trades', 'signals',
+                'analytics', 'settings', 'admin'].some(p => path.includes(p));
             if (isProtectedPage) {
-                window.location.href = 'login.html';
+                window.location.href = 'login';
             }
         }
     });
@@ -228,13 +261,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const messages = {
             'auth/user-not-found': 'Email tidak terdaftar. Silakan daftar terlebih dahulu.',
             'auth/wrong-password': 'Password salah. Silakan coba lagi.',
+            'auth/invalid-credential': 'Email atau password salah. Silakan coba lagi.',
+            'auth/invalid-email': 'Format email tidak valid.',
             'auth/email-already-in-use': 'Email ini sudah terdaftar. Silakan login.',
             'auth/weak-password': 'Password terlalu lemah. Minimal 6 karakter.',
-            'auth/invalid-email': 'Format email tidak valid.',
             'auth/network-request-failed': 'Gagal terhubung. Periksa koneksi internet Anda.',
-            'auth/too-many-requests': 'Terlalu banyak percobaan. Silakan tunggu sebentar.',
-            'auth/popup-closed-by-user': 'Popup ditutup sebelum selesai.',
+            'auth/too-many-requests': 'Terlalu banyak percobaan. Coba lagi beberapa menit.',
+            'auth/popup-closed-by-user': 'Popup ditutup. Silakan coba lagi.',
+            'auth/popup-blocked': 'Popup diblokir browser. Menggunakan metode redirect...',
+            'auth/cancelled-popup-request': 'Permintaan dibatalkan. Silakan coba lagi.',
+            'auth/operation-not-allowed': 'Metode login ini belum diaktifkan. Hubungi admin.',
+            'auth/account-exists-with-different-credential': 'Email sudah digunakan dengan metode login lain.',
+            'auth/user-disabled': 'Akun Anda telah dinonaktifkan. Hubungi admin.',
         };
-        return messages[code] || 'Terjadi kesalahan. Silakan coba lagi.';
+        return messages[code] || `Terjadi kesalahan (${code || 'unknown'}). Silakan coba lagi.`;
     }
 });
