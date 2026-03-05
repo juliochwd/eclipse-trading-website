@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!mobileMenu) {
                 mobileMenu = document.createElement('div');
                 mobileMenu.className = 'mobile-menu';
-                mobileMenu.innerHTML = navMenu.innerHTML + navCta.innerHTML;
+
+                // Secure DOM cloning instead of innerHTML concatenation
+                Array.from(navMenu.children).forEach(child => mobileMenu.appendChild(child.cloneNode(true)));
+                Array.from(navCta.children).forEach(child => mobileMenu.appendChild(child.cloneNode(true)));
+
                 mobileMenu.style.cssText = `
                     position: fixed;
                     top: 72px;
