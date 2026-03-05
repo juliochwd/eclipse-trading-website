@@ -2,3 +2,8 @@
 **Vulnerability:** The application was logging the entire form submission data (which includes user names and email addresses) to the browser console using `console.log('Form submitted:', data);` in `script.js`. Additionally, the HTML inputs lacked `name` attributes and fundamental `maxlength` bounds.
 **Learning:** Even though this is a static frontend, logging form entries can result in sensitive Personally Identifiable Information (PII) being exposed to local browser extensions or shoulder-surfed. Missing form input names also means form functionality could be impaired or easily bypassed, and missing size constraints leave the application open to client-side resource exhaustion if someone pastes enormous payloads.
 **Prevention:** Avoid logging complete objects directly to the browser console in production code. Always specify basic bounds (like `maxlength`) on all user input fields to perform fundamental client-side validation.
+
+## 2026-03-04 - [CRITICAL] Fix DOM-based XSS in Mobile Menu Creation
+**Vulnerability:** The mobile menu was constructed by directly concatenating HTML strings from other elements using `mobileMenu.innerHTML = navMenu.innerHTML + navCta.innerHTML;`. This creates a DOM-based XSS vulnerability if any part of the source HTML contains unsanitized user input or gets modified later.
+**Learning:** Even internal element cloning must be done carefully. String concatenation of `innerHTML` is inherently unsafe and can easily introduce XSS when those elements originate from or incorporate unvalidated sources.
+**Prevention:** Always use secure DOM manipulation methods, such as `element.cloneNode(true)` and `element.appendChild()`, when duplicating or moving existing DOM elements instead of string manipulation via `innerHTML`.
