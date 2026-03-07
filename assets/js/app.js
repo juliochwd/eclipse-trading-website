@@ -100,21 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
         lastScroll = currentScroll;
     });
 
-    // Animate elements on scroll
-    const animateOnScroll = function () {
-        const elements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
-
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }
-        });
-    };
-
     // Set initial state for animated elements
     const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
     animatedElements.forEach((element, index) => {
@@ -123,8 +108,18 @@ document.addEventListener('DOMContentLoaded', function () {
         element.style.transition = `all 0.6s ease ${index * 0.1}s`;
     });
 
-    window.addEventListener('scroll', animateOnScroll);
-    animateOnScroll(); // Trigger once on load
+    // ⚡ Bolt Optimization: Use IntersectionObserver instead of scroll event for better performance
+    const animationObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -150px 0px' });
+
+    animatedElements.forEach(element => animationObserver.observe(element));
 
     // Form submission (contact form — Formspree)
     const contactForm = document.getElementById('contact-form');
