@@ -86,36 +86,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Navbar background on scroll
     const navbar = document.querySelector('.navbar');
-    let lastScroll = 0;
 
+    // ⚡ Bolt Optimization: Use requestAnimationFrame for scroll event to prevent layout thrashing
+    let isScrolling = false;
     window.addEventListener('scroll', function () {
-        const currentScroll = window.pageYOffset;
+        if (!isScrolling) {
+            window.requestAnimationFrame(function() {
+                const currentScroll = window.pageYOffset;
 
-        if (currentScroll > 100) {
-            navbar.style.background = 'rgba(15, 23, 42, 0.95)';
-        } else {
-            navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+                if (navbar) {
+                    if (currentScroll > 100) {
+                        navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                    } else {
+                        navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+                    }
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
         }
-
-        lastScroll = currentScroll;
     });
 
+    // ⚡ Bolt Optimization: Replace scroll event listener with IntersectionObserver for better performance
     // Animate elements on scroll
-    const animateOnScroll = function () {
-        const elements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
-
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }
-        });
-    };
-
-    // Set initial state for animated elements
     const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
     animatedElements.forEach((element, index) => {
         element.style.opacity = '0';
@@ -123,8 +116,21 @@ document.addEventListener('DOMContentLoaded', function () {
         element.style.transition = `all 0.6s ease ${index * 0.1}s`;
     });
 
-    window.addEventListener('scroll', animateOnScroll);
-    animateOnScroll(); // Trigger once on load
+    const animationObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target); // Stop observing once animated
+            }
+        });
+    }, {
+        rootMargin: '0px 0px -150px 0px'
+    });
+
+    animatedElements.forEach(element => {
+        animationObserver.observe(element);
+    });
 
     // Form submission (contact form — Formspree)
     const contactForm = document.getElementById('contact-form');
@@ -254,14 +260,22 @@ document.addEventListener('DOMContentLoaded', function () {
     simulateTrading();
 
     // Parallax orbs
+    // ⚡ Bolt Optimization: Use requestAnimationFrame for mousemove event to prevent layout thrashing
     const orbs = document.querySelectorAll('.gradient-orb');
+    let isMouseMoving = false;
     window.addEventListener('mousemove', function (e) {
-        orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 20;
-            const x = (window.innerWidth / 2 - e.clientX) / speed;
-            const y = (window.innerHeight / 2 - e.clientY) / speed;
-            orb.style.transform = `translate(${x}px, ${y}px)`;
-        });
+        if (!isMouseMoving) {
+            window.requestAnimationFrame(function() {
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 20;
+                    const x = (window.innerWidth / 2 - e.clientX) / speed;
+                    const y = (window.innerHeight / 2 - e.clientY) / speed;
+                    orb.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                isMouseMoving = false;
+            });
+            isMouseMoving = true;
+        }
     });
 
     console.log('🚀 Eclipse Trading Platform Loaded Successfully!');
