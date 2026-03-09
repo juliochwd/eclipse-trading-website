@@ -1,6 +1,48 @@
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET /styles.css HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET /script.js HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET /styles.css HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:01] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:02] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:02] "GET /assets/js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:02] "GET /assets/js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:02] code 404, message File not found
+127.0.0.1 - - [09/Mar/2026 06:40:02] "GET /eclipse-trading-website/sw.js HTTP/1.1" 404 -
+127.0.0.1 - - [09/Mar/2026 06:40:03] "GET /login.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:03] "GET /assets/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:03] "GET /assets/js/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:05] code 404, message File not found
+127.0.0.1 - - [09/Mar/2026 06:40:05] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [09/Mar/2026 06:40:05] "GET /dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:05] "GET /assets/css/dashboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:06] "GET /assets/js/dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:07] "GET /trades.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:08] "GET /signals.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:09] "GET /analytics.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:10] "GET /settings.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:11] "GET /terms.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:11] "GET /privacy.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:11] "GET /register.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:11] code 404, message File not found
+127.0.0.1 - - [09/Mar/2026 06:40:11] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [09/Mar/2026 06:40:12] "GET /forgot-password.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:12] code 404, message File not found
+127.0.0.1 - - [09/Mar/2026 06:40:12] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [09/Mar/2026 06:40:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:12] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:13] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:13] "GET /assets/js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:13] "GET /assets/js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:13] code 404, message File not found
+127.0.0.1 - - [09/Mar/2026 06:40:13] "GET /eclipse-trading-website/sw.js HTTP/1.1" 404 -
+127.0.0.1 - - [09/Mar/2026 06:40:14] "GET /manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:14] "GET /robots.txt HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:40:14] "GET /sitemap.xml HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:06] "GET /dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:06] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:06] "GET /assets/css/dashboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:06] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:06] "GET /assets/js/dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:07] "GET /login.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:07] "GET /assets/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:07] "GET /assets/js/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:55] "GET /dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:55] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [09/Mar/2026 06:41:55] "GET /assets/css/dashboard.css HTTP/1.1" 200 -
