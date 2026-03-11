@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sidebar Toggle for Mobile
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
+            const isOpen = sidebar.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isOpen.toString());
         });
 
         // Close sidebar when clicking outside on mobile
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.innerWidth <= 768) {
                 if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('open')) {
                     sidebar.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
                 }
             }
         });
