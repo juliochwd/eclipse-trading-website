@@ -100,11 +100,18 @@ document.addEventListener('DOMContentLoaded', function () {
         lastScroll = currentScroll;
     });
 
-    // Animate elements on scroll
-    const animateOnScroll = function () {
-        const elements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
+    // Set initial state for animated elements
+    const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = `all 0.6s ease ${index * 0.1}s`;
+    });
 
-        elements.forEach(element => {
+    // Animate elements on scroll
+    // ⚡ Bolt Optimization: Reuse cached animatedElements instead of querying DOM on every scroll
+    const animateOnScroll = function () {
+        animatedElements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
             const elementVisible = 150;
 
@@ -114,14 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     };
-
-    // Set initial state for animated elements
-    const animatedElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
-    animatedElements.forEach((element, index) => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = `all 0.6s ease ${index * 0.1}s`;
-    });
 
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll(); // Trigger once on load
