@@ -1,6 +1,49 @@
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET /styles.css HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:40:06] "GET /script.js HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET /styles.css HTTP/1.1" 200 -
-127.0.0.1 - - [03/Mar/2026 18:42:15] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:33] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:33] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:34] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:34] "GET /assets/js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:35] "GET /assets/js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:35] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:48:35] "GET /eclipse-trading-website/sw.js HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:48:35] "GET /login.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:35] "GET /assets/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:35] "GET /assets/js/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:37] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:48:37] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:48:38] "GET /dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:38] "GET /assets/css/dashboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:38] "GET /assets/js/dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:39] "GET /trades.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:39] "GET /assets/js/auth.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Mar/2026 06:48:40] "GET /signals.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:41] "GET /analytics.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:43] "GET /settings.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /terms.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /privacy.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /register.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /assets/js/auth.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /forgot-password.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:44] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:48:44] "GET /dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET /assets/js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET /assets/js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:45] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:48:45] "GET /eclipse-trading-website/sw.js HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:48:46] "GET /manifest.json HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:46] "GET /robots.txt HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:48:46] "GET /sitemap.xml HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /assets/css/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /assets/js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /assets/js/i18n.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /assets/js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:08] code 404, message File not found
+127.0.0.1 - - [11/Mar/2026 06:49:08] "GET /eclipse-trading-website/sw.js HTTP/1.1" 404 -
+127.0.0.1 - - [11/Mar/2026 06:49:09] "GET /login.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:09] "GET /assets/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Mar/2026 06:49:09] "GET /assets/js/auth.js HTTP/1.1" 200 -
