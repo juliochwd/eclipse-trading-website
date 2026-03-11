@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!mobileMenu) {
                 mobileMenu = document.createElement('div');
                 mobileMenu.className = 'mobile-menu';
-                mobileMenu.innerHTML = navMenu.innerHTML + navCta.innerHTML;
+                const navClone = navMenu.cloneNode(true);
+                const ctaClone = navCta.cloneNode(true);
+                mobileMenu.appendChild(navClone);
+                mobileMenu.appendChild(ctaClone);
                 mobileMenu.style.cssText = `
                     position: fixed;
                     top: 72px;
