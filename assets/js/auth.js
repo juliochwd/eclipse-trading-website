@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!alertBox) return;
         alertBox.className = `alert alert-${type} show`;
         const iconClass = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
-        alertBox.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
+        alertBox.textContent = '';
+        const icon = document.createElement('i');
+        icon.className = `fas ${iconClass}`;
+        alertBox.appendChild(icon);
+        alertBox.appendChild(document.createTextNode(` ${message}`));
         setTimeout(() => alertBox.classList.remove('show'), 5000);
     }
 
