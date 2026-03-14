@@ -101,10 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Animate elements on scroll
+    // ⚡ Bolt Optimization: Cached DOM query outside scroll listener to prevent O(N) queries per frame
+    const scrollElements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
     const animateOnScroll = function () {
-        const elements = document.querySelectorAll('.feature-card, .pricing-card, .step, .performance-card');
-
-        elements.forEach(element => {
+        scrollElements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
             const elementVisible = 150;
 
